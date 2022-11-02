@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheater API</title>
+</head>
+<body>
+    <div id="default">
+        <input type="text" id="inputAPI" value="Ternat">
+        <button id="btnAPI">Search</button>
+        <h2 id="place">place</h2>
+        <b id="temperature">temperature</b>
+        <p id="desc">description</p>
+
+    </div>
+    <script>
+        //VARIABLES
+        const inputAPI = document.getElementById('inputAPI');
+        const button = document.getElementById('btnAPI');
+        const place = document.getElementById('place');
+        const temperature = document.getElementById('temperature');
+        const desc = document.getElementById('desc');
+        let lon = 0;
+        let lat = 0;
+
+        button.addEventListener('click', function() {
+            const weatherLonLat = fetch('http://api.openweathermap.org/geo/1.0/direct?q='+ inputAPI.value +'&limit=5&appid=6de8ad5ee4d5a772c9f7ac5ea5af887a')
+            weatherLonLat
+            .then((res) => res.json())
+            .then((data) => {
+                //console.log(data[0]);
+                lat = data[0].lat;
+                console.log(lat);
+                lon = data[0].lon;
+                console.log(lon);
+                weather();
+                place.innerHTML = data[0].name;
+            })
+            .catch(err => alert("Wrong city name!"))
+
+        })
+
+        function weather() {
+            const weatherAPI = fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=6de8ad5ee4d5a772c9f7ac5ea5af887a`)
+            weatherAPI
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                desc.innerHTML = data.weather[0].description;
+                temperature.innerHTML = ((data.main.temp) - 273.15).toFixed(2) + ' degrees Celcius';
+            })
+        }
+        
+        //inputveld moet kunnen typen 
+        //button naast met zoeken waardoor het dan in actie schiet
+        //data ophalen binnen het uur het huidige weer ophalen 
+    </script>
+</body>
+</html>
