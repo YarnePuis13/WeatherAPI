@@ -25,6 +25,8 @@
         let lon = 0;
         let lat = 0;
 
+
+        //FETCH
         button.addEventListener('click', function() {
             const weatherLonLat = fetch('http://api.openweathermap.org/geo/1.0/direct?q='+ inputAPI.value +'&limit=5&appid=6de8ad5ee4d5a772c9f7ac5ea5af887a')
             weatherLonLat
@@ -51,7 +53,14 @@
                 desc.innerHTML = data.weather[0].description;
                 temperature.innerHTML = ((data.main.temp) - 273.15).toFixed(2) + ' degrees Celcius';
             })
-        }
+        } 
+
+     /*    function weatherFourDays() {
+            const weatherAPIFourDays = fetch(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=&lon=${lon}&appid=6de8ad5ee4d5a772c9f7ac5ea5af887a`)
+            weatherAPIFourDays
+            .then((res) => res.json())
+            .then((data) => console.log(data));
+        } */
         
         //inputveld moet kunnen typen 
         //button naast met zoeken waardoor het dan in actie schiet
